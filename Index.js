@@ -1,8 +1,15 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const path = require('path');
+
+const Manager = require('./lib/Manager');
+const Engineer = require('/lib/Engineer');
+const Intern = require('./lib/Intern');
+
+const teamMembers = [];
 
 const generateHTML = require('./src/generateHTML.js');
-const path = require('path');
+
 
 
 //question object Manager
@@ -10,10 +17,10 @@ const promptUser = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'title',
+            name: 'managerName',
             message: "What is the team manager's name?",
-            validate: managerNameInput => {
-                if (managerNameInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your team manager's name!");
@@ -23,10 +30,10 @@ const promptUser = () => {
         },
         {
             type: 'input',
-            name: 'id',
+            name: 'managerId',
             message: "What is the team manager's id?",
-            validate: manageridInput => {
-                if (manageridInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your team manager's id!");
@@ -37,10 +44,10 @@ const promptUser = () => {
         //new to validate email
         {
             type: 'input',
-            name: 'email',
+            name: 'managerEmail',
             message: "What is the team manager's email?",
-            validate: managerEmailInput => {
-                if (managerEmailInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log('Please enter a valid email!');
@@ -50,10 +57,10 @@ const promptUser = () => {
         },
         {
             type: 'input',
-            name: 'office',
+            name: 'managerPhone',
             message: "What is the team manager's office number?",
-            validate: managerOfficeInput => {
-                if (managerOfficeInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your team manager's id!");
@@ -67,15 +74,16 @@ const promptUser = () => {
             name: 'teammember',
             message: 'Which type of team member would you like to add?',
             choices: ['Engineer', 'Intern', 'Finish building my team'],
-            validate: teammemberInput => {
-                if ('Engineer') {
+            validate: answer => {
+                if (answer == 'Engineer') {
                     return promptUserEngineer();
 
-                }else if ('Intern') {
+                }else if (answer == 'Intern') {
                     return promptUserIntern();
 
-                }else if ('Finish building my team') {
-                    return writeToFile();
+                }else if (answer == 'Finish building my team') {
+                    // return writeToFile();
+                    //add team members to array
 
                 } else {
                     console.log('Please select a team member!');
@@ -91,10 +99,10 @@ const promptUserEngineer = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'engineertitle',
+            name: 'engineerName',
             message: "What is the engineer's name?",
-            validate: engineerNameInput => {
-                if (engineerNameInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your engineer's name!");
@@ -104,10 +112,10 @@ const promptUserEngineer = () => {
         },
         {
             type: 'input',
-            name: 'id',
+            name: 'engineerId',
             message: "What is the engineer's id?",
-            validate: engineerIdInput => {
-                if (engineerIdInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your engineer's id!");
@@ -118,10 +126,10 @@ const promptUserEngineer = () => {
         //need to validate email
         {
             type: 'input',
-            name: 'email',
+            name: 'engineerEmail',
             message: "What is the engineer's email?",
-            validate: emailInput => {
-                if (emailInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log('Please enter a valid email!');
@@ -131,10 +139,10 @@ const promptUserEngineer = () => {
         },
         {
             type: 'input',
-            name: 'github',
+            name: 'engineerGithub',
             message: "What is the engineer's GitHub username?",
-            validate: usernameInput => {
-                if (usernameInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your engineer's GitHub username!");
@@ -147,15 +155,16 @@ const promptUserEngineer = () => {
             name: 'teammember',
             message: 'Which type of team member would you like to add?',
             choices: ['Engineer', 'Intern', 'Finish building my team'],
-            validate: licenseInput => {
-                if ('Engineer') {
+            validate: answer => {
+                if (answer == 'Engineer') {
                     return promptUserEngineer();
 
-                }else if ('Intern') {
+                }else if (answer == 'Intern') {
                     return promptUserIntern();
 
-                }else if ('Finish building my team') {
-                    return writeToFile();
+                }else if (answer == 'Finish building my team') {
+                    // return writeToFile();
+                    //add team members to array
 
                 } else {
                     console.log('Please select a team member!');
@@ -171,10 +180,10 @@ const promptUserIntern = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'interntitle',
+            name: 'internTitle',
             message: "What is the intern's name?",
-            validate: internNameInput => {
-                if (internNameInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your intern's name!");
@@ -184,10 +193,10 @@ const promptUserIntern = () => {
         },
         {
             type: 'input',
-            name: 'id',
+            name: 'internId',
             message: "What is the intern's id?",
-            validate: internIdInput => {
-                if (internIdInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your intern's id!");
@@ -198,10 +207,10 @@ const promptUserIntern = () => {
         //need to validate email
         {
             type: 'input',
-            name: 'email',
+            name: 'internEmail',
             message: "What is the intern's email?",
-            validate: emailInput => {
-                if (emailInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log('Please enter a valid email!');
@@ -211,10 +220,10 @@ const promptUserIntern = () => {
         },
         {
             type: 'input',
-            name: 'school',
+            name: 'internSchool',
             message: "Where does the intern go to school?",
-            validate: schoolInput => {
-                if (schoolInput) {
+            validate: answer => {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your intern's school!");
@@ -227,15 +236,16 @@ const promptUserIntern = () => {
             name: 'teammember',
             message: 'Which type of team member would you like to add?',
             choices: ['Engineer', 'Intern', 'Finish building my team'],
-            validate: licenseInput => {
-                if ('Engineer') {
+            validate: answer => {
+                if (answer == 'Engineer') {
                     return promptUserEngineer();
 
-                }else if ('Intern') {
+                }else if (answer == 'Intern') {
                     return promptUserIntern();
 
-                }else if ('Finish building my team') {
-                    return writeToFile();
+                }else if (answer == 'Finish building my team') {
+                    // return writeToFile();
+                    //add team members to array
 
                 } else {
                     console.log('Please select a team member!');
