@@ -1,20 +1,50 @@
+const result = [];
+
+function createCards (teamMembers) {
+    teamMembers.filter(data => {
+        let manager = array.filter()
+
+
+        result.push(manager)
+
+        result.push(engineers)
+
+        result.push(intern)
+        
+    });
+
+// generate manager section
+const generateManager = (manager) => {
+    return `
+    <div class="card employee-card">
+            <div class="card-header">
+                <h2 class="card-title">${manager.getName()}</h2>
+                <h3 class="card-titel"><i class="fas fa-mug-hot mr-2"></1>${manager.getRole()}</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${manager.getId()}</li>
+                    <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
+                    <li class="list-group-itme">Office number: ${manager.getPhone()}<li>
+                </ul>
+            </div>
+        </div>
+    `;
+};
+
 // generate engineer section
 const generateEngineer = (engineer) => {
-    if (!engineer) {
-        return '';
-    }
-
     return `
     <div class="card employee-card">
     <div class="card-header">
-        <h2 class="card-title">${data.engineerName}</h2>
-        <h3 class="card-titel"><i class="fas fa-glasses mr-2"></1>Engineer</h3>
+        <h2 class="card-title">${engineer.getName()}</h2>
+        <h3 class="card-titel"><i class="fas fa-glasses mr-2"></1>${engineer.getRole()}</h3>
     </div>
     <div class="card-body">
         <ul class="list-group">
-            <li class="list-group-item">ID: ${data.engineerId}</li>
-            <li class="list-group-item">Email: <a href="mailto:${data.engineerEmail}">${data.engineerEmail}</a></li>
-            <li class="list-group-itme">GitHub: <a href="https://github.com/${data.engineerGithub}">${data.engineerGithub}</a><li>
+            <li class="list-group-item">ID: ${engineer.getId()}</li>
+            <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
+            <li class="list-group-itme">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a><li>
         </ul>
     </div>
 </div>
@@ -22,34 +52,33 @@ const generateEngineer = (engineer) => {
 };
 
 // generate intern section based on if intern name was entered
-const generateIntern = (internName) => {
-    if (!internName) {
-        return '';
-    }
-
+const generateIntern = (intern) => {
     return `
     <div class="card employee-card">
     <div class="card-header">
-        <h2 class="card-title">${data.internName}</h2>
-        <h3 class="card-titel"><i class="fas fa-user-graduate mr-2"></1>Intern</h3>
+        <h2 class="card-title">${intern.getName()}</h2>
+        <h3 class="card-titel"><i class="fas fa-user-graduate mr-2"></1>${intern.getRole()}</h3>
     </div>
     <div class="card-body">
         <ul class="list-group">
-            <li class="list-group-item">ID: ${data.internId}</li>
-            <li class="list-group-item">Email: <a href="mailto:${data.internEmail}}">${data.internEmail}</a></li>
-            <li class="list-group-itme">School: ${data.internSchool}}<li>
+            <li class="list-group-item">ID: ${intern.getId()}</li>
+            <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+            <li class="list-group-itme">School: ${intern.getSchool()}<li>
         </ul>
     </div>
 </div>
     `;
 };
 
+console.log("Inside create cards");
+
+};
 
 
 
-module.exports = templateData => {
-    // destructure page data by section
-    const {} = templateData;
+
+module.exports = teamMembers => {
+    
 
     return `
     <!DOCTYPE html>
@@ -79,26 +108,13 @@ module.exports = templateData => {
         <div class="row">
             <div class="team-area col-12 d-flex justify-content-center">
 
-        <div class="card employee-card">
-            <div class="card-header">
-                <h2 class="card-title">${employee - input}</h2>
-                <h3 class="card-titel"><i class="fas fa-mug-hot mr-2"></1>Manager</h3>
-            </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">ID: ${input}</li>
-                    <li class="list-group-item">Email: <a href="mailto:${email}}">${email}</a></li>
-                    <li class="list-group-itme">Office number: ${phone}}<li>
-                </ul>
-            </div>
-        </div>
-        ${generateEngineer(engineer)}
-        ${generateIntern(intern)}
-   
+        
+        ${createCards(teamMembers)}   
       <footer class="container text-center py-3">
-        <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>
       </footer>
     </body>
     </html>
-    `;
+    `
 };
+
+

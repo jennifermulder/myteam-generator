@@ -1,0 +1,27 @@
+{
+  "name": "myteam-generator",
+  "version": "1.0.0",
+  "description": "![](assets/images/myteam.jpg)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "jest": "^26.1.0",
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jennifermulder/myteam-generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jennifermulder/myteam-generator/issues"
+  },
+  "homepage": "https://github.com/jennifermulder/myteam-generator#readme"
+}

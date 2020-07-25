@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const path = require('path');
 
 const Manager = require('./lib/Manager');
-const Engineer = require('/lib/Engineer');
+const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 const teamMembers = [];
@@ -60,7 +60,7 @@ const promptUser = () => {
             name: 'managerPhone',
             message: "What is the team manager's office number?",
             validate: answer => {
-                if (answer !== '') {
+                if (answer !== typeof 42) {
                     return true;
                 } else {
                     console.log("Please enter your team manager's id!");
@@ -68,30 +68,14 @@ const promptUser = () => {
                 }
             }
         },
-        {
-            //how to pass through selection
-            type: 'list',
-            name: 'teammember',
-            message: 'Which type of team member would you like to add?',
-            choices: ['Engineer', 'Intern', 'Finish building my team'],
-            validate: answer => {
-                if (answer == 'Engineer') {
-                    return promptUserEngineer();
-
-                }else if (answer == 'Intern') {
-                    return promptUserIntern();
-
-                }else if (answer == 'Finish building my team') {
-                    // return writeToFile();
-                    //add team members to array
-
-                } else {
-                    console.log('Please select a team member!');
-                    return false;
-                }
-            }
-        }, 
-    ]);
+    ])
+    //portfolioData = promise object from inquirer prompts
+    .then(data => {
+        const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerPhone)
+        teamMembers.push(manager);
+        newMember();        
+    });
+        
 };
 
 //question object Engineer
@@ -149,30 +133,13 @@ const promptUserEngineer = () => {
                     return false;
                 }
             }
-        },
-        {
-            type: 'list',
-            name: 'teammember',
-            message: 'Which type of team member would you like to add?',
-            choices: ['Engineer', 'Intern', 'Finish building my team'],
-            validate: answer => {
-                if (answer == 'Engineer') {
-                    return promptUserEngineer();
-
-                }else if (answer == 'Intern') {
-                    return promptUserIntern();
-
-                }else if (answer == 'Finish building my team') {
-                    // return writeToFile();
-                    //add team members to array
-
-                } else {
-                    console.log('Please select a team member!');
-                    return false;
-                }
-            }
-        }, 
-    ]);
+        },    
+    ])
+    .then(data => {
+        const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
+        teamMembers.push(engineer);
+        newMember();        
+    });
 };
 
 //question object Engineer
@@ -180,7 +147,7 @@ const promptUserIntern = () => {
     return inquirer.prompt([
         {
             type: 'input',
-            name: 'internTitle',
+            name: 'internName',
             message: "What is the intern's name?",
             validate: answer => {
                 if (answer !== '') {
@@ -231,59 +198,65 @@ const promptUserIntern = () => {
                 }
             }
         },
-        {
-            type: 'list',
-            name: 'teammember',
-            message: 'Which type of team member would you like to add?',
-            choices: ['Engineer', 'Intern', 'Finish building my team'],
-            validate: answer => {
-                if (answer == 'Engineer') {
-                    return promptUserEngineer();
-
-                }else if (answer == 'Intern') {
-                    return promptUserIntern();
-
-                }else if (answer == 'Finish building my team') {
-                    // return writeToFile();
-                    //add team members to array
-
-                } else {
-                    console.log('Please select a team member!');
-                    return false;
-                }
-            }
-        }, 
-    ]);
+        
+    ])
+    .then(data => {
+        const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
+        teamMembers.push(intern);
+        newMember();        
+    });
 };
+
+function newMember() {
+    return inquirer.prompt([{
+        type: 'list',
+        name: 'teamMember',
+        message: 'Which type of team member would you like to add?',
+        choices: ['Engineer', 'Intern', 'Finish building my team'],
+    }])
+        .then(answer => {
+            if (answer.teamMember == 'Engineer') {
+                // choices[0]
+                return promptUserEngineer();
+
+            } else if (answer.teamMember == 'Intern') {
+                return promptUserIntern();
+
+            } else if (answer.teamMember == 'Finish building my team') {
+                return buildMyTeam();
+                // return writeToFile();
+                //add team members to array
+
+            } else {
+                console.log('Please select a team member!');
+                return false;
+            }
+        })
+}
+
 
 
 // function to write README file using location and generateMarkdown template
-function writeToFile(fileName, data) {
-    //write file in path created from current working directory
-    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
-}
+// function writeToFile(fileName, data) {
+//     //write file in path created from current working directory
+//     return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+// }
 
 // function to initialize program
-function init(){
-    promptUser()
-    .then(pageData => {
-        return writeToFile("myTeam.html", generateHTML({ ...readmeData }))
-    })
-    .catch(err => {
-        console.log(err);
-    });
-}
+function buildMyTeam() {
+        return generateHTML(teamMembers)
+        };
 
 // function call to initialize program
-init();
+promptUser();
 
 
 
 
 
 
-const Team = require('./lib/Employee');
+// const Team = require('./lib/Employee');
 
 
 
-new Team().initializeTeam();
+// new Team().initializeTeam();
