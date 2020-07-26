@@ -1,6 +1,6 @@
 const Employee = require("../lib/Employee");
 
-const cardArr = [];
+let cardArr = [];
 
 
 
@@ -12,13 +12,13 @@ function createCards(teamMembers) {
     <div class="card employee-card">
             <div class="card-header">
                 <h2 class="card-title">${manager.getName()}</h2>
-                <h3 class="card-titel"><i class="fas fa-mug-hot mr-2"></1>${manager.getRole()}</h3>
+                <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${manager.getRole()}</h3>
             </div>
             <div class="card-body">
                 <ul class="list-group">
                     <li class="list-group-item">ID: ${manager.getId()}</li>
                     <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
-                    <li class="list-group-itme">Office number: ${manager.getPhone()}<li>
+                    <li class="list-group-item">Office number: ${manager.getPhone()}</li>
                 </ul>
             </div>
         </div>
@@ -31,13 +31,13 @@ function createCards(teamMembers) {
     <div class="card employee-card">
         <div class="card-header">
             <h2 class="card-title">${engineer.getName()}</h2>
-            <h3 class="card-titel"><i class="fas fa-glasses mr-2"></1>${engineer.getRole()}</h3>
+            <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>${engineer.getRole()}</h3>
         </div>
         <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item">ID: ${engineer.getId()}</li>
                 <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-                <li class="list-group-itme">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a><li>
+                <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></li>
             </ul>
         </div>
     </div>
@@ -50,7 +50,7 @@ function createCards(teamMembers) {
     <div class="card employee-card">
         <div class="card-header">
             <h2 class="card-title">${intern.getName()}</h2>
-            <h3 class="card-titel"><i class="fas fa-user-graduate mr-2"></1>${intern.getRole()}</h3>
+            <h3 class="card-titel"><i class="fas fa-user-graduate mr-2"></i>${intern.getRole()}</h3>
         </div>
         <div class="card-body">
             <ul class="list-group">
@@ -64,15 +64,19 @@ function createCards(teamMembers) {
     }
 
     //push manager map array to the array of cards. Filter for role = manager. Pass all maanger data from user input into generateManager to create map. 
-    cardArr.push(teamMembers.filter(data => employee.getRole() === "Manager").map(managerData => generateManager(managerData)),
+   cardArr = [...teamMembers.filter(employee => employee.getRole() === "Manager").map(managerData => generateManager(managerData)), ...teamMembers.filter(employee => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData)), ...teamMembers.filter(employee => employee.getRole() === "Intern").map(internData => generateIntern(internData))]
+   console.log(cardArr);
+   let htmlStr = cardArr.join('\n')
+    // cardArr.push(teamMembers.filter(employee => employee.getRole() === "Manager").map(managerData => generateManager(managerData))),
 
-    //push engineer map array to the array of cards. Filter for role = engineer. Pass all engineer data from user input into generateEngineer to create map. 
-    cardArr.push(teamMembers.filter(data => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData)),
+    // //push engineer map array to the array of cards. Filter for role = engineer. Pass all engineer data from user input into generateEngineer to create map. 
+    // cardArr.push(teamMembers.filter(employee => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData))),
 
-    //push intern map array to the array of cards. Filter for role = intern. Pass all intern data from user input into generateIntern to create map. 
-    cardArr.push(teamMembers.filter(data => employee.getRole() === "Intern").map(internData => generateIntern(internData)),
-
-    console.log("Input is successfully passed into create cards function")
+    // //push intern map array to the array of cards. Filter for role = intern. Pass all intern data from user input into generateIntern to create map. 
+    // cardArr.push(teamMembers.filter(employee => employee.getRole() === "Intern").map(internData => generateIntern(internData))),
+    console.log("Input is successfully passed into create cards function" , htmlStr)
+    return htmlStr;
+    
 
 }
 

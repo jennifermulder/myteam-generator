@@ -1,10 +1,23 @@
 const Intern = require('../lib/Intern');
 
-test('creates an Intern object', () => {
-    const intern = new Intern('Intern1');
+const intern = new Intern('Intern1', '789012', 'intern@company.com', 'UCSC');
 
-    expect(intern.name).toBe('Intern1');
-    expect(intern.id).toEqual(expect.any(Number));
-    expect(intern.email).toContain('@');
-    expect(intern.school).toContain('');
+test('creates intern name', () => {
+    expect(intern.getName()).toEqual('Intern1');
+});
+
+test('creates intern id', () => {
+    expect(intern.getId()).toEqual('789012');
+});
+
+test('creates intern email', () => {
+    expect(intern.getEmail()).toEqual('intern@company.com');
+});
+
+test('creates intern school', () => {
+    expect(intern.getSchool()).toEqual('UCSC');
+});
+
+test('creates intern role', () => {
+    expect(intern.getRole()).toEqual('Intern')
 });

@@ -11,7 +11,6 @@ const teamMembers = [];
 const generateHTML = require('./src/generateHTML.js');
 
 
-
 //question object Manager
 const promptUser = () => {
     return inquirer.prompt([
@@ -41,13 +40,12 @@ const promptUser = () => {
                 }
             }
         },
-        //new to validate email
         {
             type: 'input',
             name: 'managerEmail',
             message: "What is the team manager's email?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(answer)) {
                     return true;
                 } else {
                     console.log('Please enter a valid email!');
@@ -60,7 +58,7 @@ const promptUser = () => {
             name: 'managerPhone',
             message: "What is the team manager's office number?",
             validate: answer => {
-                if (answer !== typeof 42) {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your team manager's id!");
@@ -69,7 +67,7 @@ const promptUser = () => {
             }
         },
     ])
-    //portfolioData = promise object from inquirer prompts
+    //data = promise object from inquirer prompts
     .then(data => {
         const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerPhone)
         teamMembers.push(manager);
@@ -107,13 +105,12 @@ const promptUserEngineer = () => {
                 }
             }
         },
-        //need to validate email
         {
             type: 'input',
             name: 'engineerEmail',
             message: "What is the engineer's email?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(answer)) {
                     return true;
                 } else {
                     console.log('Please enter a valid email!');
@@ -171,13 +168,12 @@ const promptUserIntern = () => {
                 }
             }
         },
-        //need to validate email
         {
             type: 'input',
             name: 'internEmail',
             message: "What is the intern's email?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(answer)) {
                     return true;
                 } else {
                     console.log('Please enter a valid email!');
@@ -206,7 +202,7 @@ const promptUserIntern = () => {
         newMember();        
     });
 };
-
+//to prompt user whether or not to add a new employee or finish building the team/ generate HTML
 function newMember() {
     return inquirer.prompt([{
         type: 'list',
@@ -216,17 +212,14 @@ function newMember() {
     }])
         .then(answer => {
             if (answer.teamMember == 'Engineer') {
-                // choices[0]
                 return promptUserEngineer();
 
             } else if (answer.teamMember == 'Intern') {
                 return promptUserIntern();
-
+            //html name will be "myTeam.html"
             } else if (answer.teamMember == 'Finish building my team') {
-                return buildMyTeam();
-                // return writeToFile();
-                //add team members to array
-
+                return buildMyTeam('myTeam.html');
+                
             } else {
                 console.log('Please select a team member!');
                 return false;
@@ -234,29 +227,13 @@ function newMember() {
         })
 }
 
+// function to build team but writing to file using location and generate HTML template
+function buildMyTeam(fileName) {
+    //write file in path created from current working directory
+    return fs.writeFileSync(path.join(process.cwd().dist, fileName), generateHTML(teamMembers));
+}
 
-
-// function to write README file using location and generateMarkdown template
-// function writeToFile(fileName, data) {
-//     //write file in path created from current working directory
-//     return fs.writeFileSync(path.join(process.cwd(), fileName), data);
-// }
-
-// function to initialize program
-function buildMyTeam() {
-        return generateHTML(teamMembers)
-        };
+// fs.writeFile('./dist/index.html', fileContent, err => 
 
 // function call to initialize program
 promptUser();
-
-
-
-
-
-
-// const Team = require('./lib/Employee');
-
-
-
-// new Team().initializeTeam();
