@@ -1,21 +1,14 @@
-const result = [];
+const Employee = require("../lib/Employee");
 
-function createCards (teamMembers) {
-    teamMembers.filter(data => {
-        let manager = array.filter()
+const cardArr = [];
 
 
-        result.push(manager)
 
-        result.push(engineers)
+function createCards(teamMembers) {
 
-        result.push(intern)
-        
-    });
-
-// generate manager section
-const generateManager = (manager) => {
-    return `
+    // generate manager section
+    const generateManager = (manager) => {
+        return `
     <div class="card employee-card">
             <div class="card-header">
                 <h2 class="card-title">${manager.getName()}</h2>
@@ -30,55 +23,63 @@ const generateManager = (manager) => {
             </div>
         </div>
     `;
-};
+    }
 
-// generate engineer section
-const generateEngineer = (engineer) => {
-    return `
+    // generate engineer section
+    const generateEngineer = (engineer) => {
+        return `
     <div class="card employee-card">
-    <div class="card-header">
-        <h2 class="card-title">${engineer.getName()}</h2>
-        <h3 class="card-titel"><i class="fas fa-glasses mr-2"></1>${engineer.getRole()}</h3>
+        <div class="card-header">
+            <h2 class="card-title">${engineer.getName()}</h2>
+            <h3 class="card-titel"><i class="fas fa-glasses mr-2"></1>${engineer.getRole()}</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID: ${engineer.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
+                <li class="list-group-itme">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a><li>
+            </ul>
+        </div>
     </div>
-    <div class="card-body">
-        <ul class="list-group">
-            <li class="list-group-item">ID: ${engineer.getId()}</li>
-            <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-            <li class="list-group-itme">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a><li>
-        </ul>
-    </div>
-</div>
     `;
-};
+    }
 
-// generate intern section based on if intern name was entered
-const generateIntern = (intern) => {
-    return `
+    // generate intern section based on if intern name was entered
+    const generateIntern = (intern) => {
+        return `
     <div class="card employee-card">
-    <div class="card-header">
-        <h2 class="card-title">${intern.getName()}</h2>
-        <h3 class="card-titel"><i class="fas fa-user-graduate mr-2"></1>${intern.getRole()}</h3>
+        <div class="card-header">
+            <h2 class="card-title">${intern.getName()}</h2>
+            <h3 class="card-titel"><i class="fas fa-user-graduate mr-2"></1>${intern.getRole()}</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">ID: ${intern.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+                <li class="list-group-itme">School: ${intern.getSchool()}<li>
+            </ul>
+        </div>
     </div>
-    <div class="card-body">
-        <ul class="list-group">
-            <li class="list-group-item">ID: ${intern.getId()}</li>
-            <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
-            <li class="list-group-itme">School: ${intern.getSchool()}<li>
-        </ul>
-    </div>
-</div>
     `;
-};
+    }
 
-console.log("Inside create cards");
+    //push manager map array to the array of cards. Filter for role = manager. Pass all maanger data from user input into generateManager to create map. 
+    cardArr.push(teamMembers.filter(data => employee.getRole() === "Manager").map(managerData => generateManager(managerData)),
 
-};
+    //push engineer map array to the array of cards. Filter for role = engineer. Pass all engineer data from user input into generateEngineer to create map. 
+    cardArr.push(teamMembers.filter(data => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData)),
+
+    //push intern map array to the array of cards. Filter for role = intern. Pass all intern data from user input into generateIntern to create map. 
+    cardArr.push(teamMembers.filter(data => employee.getRole() === "Intern").map(internData => generateIntern(internData)),
+
+    console.log("Input is successfully passed into create cards function")
+
+}
 
 
 
 
 module.exports = teamMembers => {
-    
 
     return `
     <!DOCTYPE html>
@@ -107,8 +108,7 @@ module.exports = teamMembers => {
     <div class="container">
         <div class="row">
             <div class="team-area col-12 d-flex justify-content-center">
-
-        
+       
         ${createCards(teamMembers)}   
       <footer class="container text-center py-3">
       </footer>
