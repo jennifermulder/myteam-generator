@@ -3,7 +3,6 @@ const Employee = require("../lib/Employee");
 let cardArr = [];
 
 
-
 function createCards(teamMembers) {
 
     // generate manager section
@@ -37,7 +36,7 @@ function createCards(teamMembers) {
             <ul class="list-group">
                 <li class="list-group-item">ID: ${engineer.getId()}</li>
                 <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-                <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></li>
+                <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.getGithub()}" target="_blank">${engineer.getGithub()}</a></li>
             </ul>
         </div>
     </div>
@@ -56,31 +55,23 @@ function createCards(teamMembers) {
             <ul class="list-group">
                 <li class="list-group-item">ID: ${intern.getId()}</li>
                 <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
-                <li class="list-group-item">School: ${intern.getSchool()}<li>
+                <li class="list-group-item">School: ${intern.getSchool()}</li>
             </ul>
         </div>
     </div>
     `;
     }
 
-    //push manager map array to the array of cards. Filter for role = manager. Pass all maanger data from user input into generateManager to create map. 
-   cardArr = [...teamMembers.filter(employee => employee.getRole() === "Manager").map(managerData => generateManager(managerData)), ...teamMembers.filter(employee => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData)), ...teamMembers.filter(employee => employee.getRole() === "Intern").map(internData => generateIntern(internData))]
-   console.log(cardArr);
-   let htmlStr = cardArr.join('\n')
-    // cardArr.push(teamMembers.filter(employee => employee.getRole() === "Manager").map(managerData => generateManager(managerData))),
+    /* filter for each role = manager. 
+    pass all employee data from user input into generateManager/Engineer/Intern to create map. 
+    push employee map array to the card array. */
 
-    // //push engineer map array to the array of cards. Filter for role = engineer. Pass all engineer data from user input into generateEngineer to create map. 
-    // cardArr.push(teamMembers.filter(employee => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData))),
+    cardArr = [...teamMembers.filter(employee => employee.getRole() === "Manager").map(managerData => generateManager(managerData)), ...teamMembers.filter(employee => employee.getRole() === "Engineer").map(engineerData => generateEngineer(engineerData)), ...teamMembers.filter(employee => employee.getRole() === "Intern").map(internData => generateIntern(internData))]
 
-    // //push intern map array to the array of cards. Filter for role = intern. Pass all intern data from user input into generateIntern to create map. 
-    // cardArr.push(teamMembers.filter(employee => employee.getRole() === "Intern").map(internData => generateIntern(internData))),
-    console.log("Input is successfully passed into create cards function" , htmlStr)
+    let htmlStr = cardArr.join('\n')
+    //to be passed into HTML template 
     return htmlStr;
-    
-
 }
-
-
 
 
 module.exports = teamMembers => {
@@ -96,9 +87,9 @@ module.exports = teamMembers => {
       <title>My Team</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
       <link rel="stylesheet" href="style.css">
-
     </head>
   
     <body>
@@ -111,12 +102,10 @@ module.exports = teamMembers => {
     </div>
     <div class="container">
         <div class="row">
-            <div class="team-area col-12 d-flex justify-content-center">
-       
-        ${createCards(teamMembers)}   
-      <footer class="container text-center py-3">
-      </footer>
+            <div class="team-area col-12 d-flex justify-content-center">  
+            ${createCards(teamMembers)}      
     </body>
+
     </html>
     `
 };
