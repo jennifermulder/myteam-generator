@@ -14,7 +14,7 @@ test('creates manager email', () => {
     expect(manager.getEmail()).toEqual('manager@company.com');
 });
 
-test('creates manager school', () => {
+test('creates manager number', () => {
     expect(manager.getPhone()).toEqual('510-867-5309');
 });
 

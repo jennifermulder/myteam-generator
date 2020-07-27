@@ -19,7 +19,7 @@ const promptUser = () => {
             name: 'managerName',
             message: "What is the team manager's name?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^[a-z ,.'-]+$/.test(answer)) {
                     return true;
                 } else {
                     console.log("Please enter your team manager's name!");
@@ -58,7 +58,7 @@ const promptUser = () => {
             name: 'managerPhone',
             message: "What is the team manager's office number?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/.test(answer)) {
                     return true;
                 } else {
                     console.log("Please enter your team manager's id!");
@@ -84,7 +84,7 @@ const promptUserEngineer = () => {
             name: 'engineerName',
             message: "What is the engineer's name?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^[a-z ,.'-]+$/.test(answer)) {
                     return true;
                 } else {
                     console.log("Please enter your engineer's name!");
@@ -147,7 +147,7 @@ const promptUserIntern = () => {
             name: 'internName',
             message: "What is the intern's name?",
             validate: answer => {
-                if (answer !== '') {
+                if (/^[a-z ,.'-]+$/.test(answer)) {
                     return true;
                 } else {
                     console.log("Please enter your intern's name!");
@@ -218,7 +218,7 @@ function newMember() {
                 return promptUserIntern();
             //html name will be "myTeam.html"
             } else if (answer.teamMember == 'Finish building my team') {
-                return buildMyTeam('myTeam.html');
+                return buildMyTeam();
                 
             } else {
                 console.log('Please select a team member!');
@@ -228,9 +228,9 @@ function newMember() {
 }
 
 // function to build team but writing to file using location and generate HTML template
-function buildMyTeam(fileName) {
+function buildMyTeam() {
     //write file in path created from current working directory
-    return fs.writeFileSync(path.join(process.cwd().dist, fileName), generateHTML(teamMembers));
+    return fs.writeFileSync('./dist/myTeam.html', generateHTML(teamMembers));
 }
 
 // fs.writeFile('./dist/index.html', fileContent, err => 
