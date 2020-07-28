@@ -3,8 +3,7 @@
 ![](dist/assets/images/myteam.jpg)
 
 ## Tutorial
-
-https://drive.google.com/file/d/1crCn027oSe-yPX-7ZPVaqWn-Q5gtnAMr/view
+https://drive.google.com/file/d/1A1zZgMQ_OKx-6jepiIxXO7XKnMveyp-2/view
 
 ## Purpose
 To provide the user with an efficient solution to generating a webpage that displays a team's basic information by simply answering questions when prompted from the command line.
@@ -19,6 +18,12 @@ When the user calls the program, they are presented with questions regarding the
 * Bootstrap
 * Node JS
 * OOP/ TDD
+
+## Usage
+To run program: node index
+
+## Test
+To run test: npm test
 
 ## Project Status
 My Team generator is compliant with defined acceptance criteria
