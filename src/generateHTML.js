@@ -17,7 +17,7 @@ function createCards(teamMembers) {
                     <ul class="list-group">
                         <li class="list-group-item">ID: ${manager.getId()}</li>
                         <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
-                        <li class="list-group-item">Office number: ${manager.getPhone()}</li>
+                        <li class="list-group-item">Office: ${manager.getPhone()}</li>
                     </ul>
                 </div>
             </div>
@@ -73,7 +73,7 @@ function createCards(teamMembers) {
     return htmlStr;
 }
 
-
+//generate HTML
 module.exports = teamMembers => {
 
     return `
@@ -89,7 +89,7 @@ module.exports = teamMembers => {
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="./assets/css/style.css">
     </head>
   
     <body>

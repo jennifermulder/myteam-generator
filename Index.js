@@ -1,6 +1,5 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const path = require('path');
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -19,7 +18,7 @@ const promptUser = () => {
             name: 'managerName',
             message: "What is the team manager's name?",
             validate: answer => {
-                if (/^[a-z ,.'-]+$/.test(answer)) {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your team manager's name!");
@@ -67,13 +66,13 @@ const promptUser = () => {
             }
         },
     ])
-    //data = promise object from inquirer prompts
-    .then(data => {
-        const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerPhone)
-        teamMembers.push(manager);
-        newMember();        
-    });
-        
+        //data = promise object from inquirer prompts
+        .then(data => {
+            const manager = new Manager(data.managerName, data.managerId, data.managerEmail, data.managerPhone)
+            teamMembers.push(manager);
+            newMember();
+        });
+
 };
 
 //question object Engineer
@@ -84,7 +83,7 @@ const promptUserEngineer = () => {
             name: 'engineerName',
             message: "What is the engineer's name?",
             validate: answer => {
-                if (/^[a-z ,.'-]+$/.test(answer)) {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your engineer's name!");
@@ -130,13 +129,13 @@ const promptUserEngineer = () => {
                     return false;
                 }
             }
-        },    
+        },
     ])
-    .then(data => {
-        const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
-        teamMembers.push(engineer);
-        newMember();        
-    });
+        .then(data => {
+            const engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub)
+            teamMembers.push(engineer);
+            newMember();
+        });
 };
 
 //question object Engineer
@@ -147,7 +146,7 @@ const promptUserIntern = () => {
             name: 'internName',
             message: "What is the intern's name?",
             validate: answer => {
-                if (/^[a-z ,.'-]+$/.test(answer)) {
+                if (answer !== '') {
                     return true;
                 } else {
                     console.log("Please enter your intern's name!");
@@ -194,13 +193,13 @@ const promptUserIntern = () => {
                 }
             }
         },
-        
+
     ])
-    .then(data => {
-        const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
-        teamMembers.push(intern);
-        newMember();        
-    });
+        .then(data => {
+            const intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
+            teamMembers.push(intern);
+            newMember();
+        });
 };
 //to prompt user whether or not to add a new employee or finish building the team/ generate HTML
 function newMember() {
@@ -216,10 +215,10 @@ function newMember() {
 
             } else if (answer.teamMember == 'Intern') {
                 return promptUserIntern();
-            //html name will be "myTeam.html"
+                //html name will be "myTeam.html"
             } else if (answer.teamMember == 'Finish building my team') {
                 return buildMyTeam();
-                
+
             } else {
                 console.log('Please select a team member!');
                 return false;
@@ -227,13 +226,11 @@ function newMember() {
         })
 }
 
-// function to build team but writing to file using location and generate HTML template
+// function to build team by writing to file using location and generate HTML template
 function buildMyTeam() {
-    //write file in path created from current working directory
+    //write file using user input data
     return fs.writeFileSync('./dist/myTeam.html', generateHTML(teamMembers));
 }
-
-// fs.writeFile('./dist/index.html', fileContent, err => 
 
 // function call to initialize program
 promptUser();
